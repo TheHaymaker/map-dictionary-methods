@@ -95,36 +95,24 @@ const createWaterfallDictionary = (wfList) => {
   const wfDictionary = {}
 
   wfList.map(wf => {
-    wfDictionary[`${wf.name}`] = wfDictionary[`${wf.name}`] || {}
     wf.rules.map(rule => {
-      wfDictionary[`${wf.name}`].hasRule = wfDictionary[`${wf.name}`].hasRule || {} 
-      wfDictionary[`${wf.name}`].hasRule[`${rule.name}`] = wf.name
+      wfDictionary[`${rule.name}`] = wfDictionary[`${rule.name}`] || []
+      if(!wfDictionary[`${rule.name}`].includes(wf.name)) {
+        wfDictionary[`${rule.name}`].push(wf.name)
+      }
 
     }) 
   })
-  // console.log(wfDictionary)
+  console.log(wfDictionary)
   return wfDictionary
 }
 
-const getUniqRules = (dict) => {
-  const masterRuleList = {}
-  const waterfalls = Object.keys(dict).map(wf => {
-    Object.keys(dict[wf].hasRule).map(ruleKey => {
-      masterRuleList[ruleKey] = masterRuleList[ruleKey] || []
-      masterRuleList[ruleKey].push(dict[wf].hasRule[ruleKey])
-    })
-  })
-  console.log(masterRuleList)
-  return masterRuleList
-}
-
 const wfDict = createWaterfallDictionary(waterfalls)
-getUniqRules(wfDict)
 
-{ 'rule A':
-   [ 'waterfall 1', 'waterfall 2', 'waterfall 3', 'waterfall 4' ],
-  'rule B': [ 'waterfall 1', 'waterfall 2' ],
-  'rule C': [ 'waterfall 1', 'waterfall 5', 'waterfall 6' ],
-  'rule Y': [ 'waterfall 3', 'waterfall 4' ],
-  'rule Z': [ 'waterfall 3', 'waterfall 5', 'waterfall 6' ],
-  'rule X': [ 'waterfall 4' ] }
+// { 'rule A':
+//    [ 'waterfall 1', 'waterfall 2', 'waterfall 3', 'waterfall 4' ],
+//   'rule B': [ 'waterfall 1', 'waterfall 2' ],
+//   'rule C': [ 'waterfall 1', 'waterfall 5', 'waterfall 6' ],
+//   'rule Y': [ 'waterfall 3', 'waterfall 4' ],
+//   'rule Z': [ 'waterfall 3', 'waterfall 5', 'waterfall 6' ],
+//   'rule X': [ 'waterfall 4' ] }
